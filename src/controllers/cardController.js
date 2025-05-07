@@ -29,9 +29,23 @@ const validateCardData = (data) => {
   ) {
     return "All fields are required.";
   }
+  if (cardholder_name.length > 20) {
+    return "Cardholder name must be 20 characters or less.";
+  }
+  const namePattern = /^[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]+$/;
+  if (!namePattern.test(cardholder_name)) {
+    return "Cardholder name must contain only letters, spaces, and letters with accents.";
+  }
+
+  if (/\s{2,}/.test(cardholder_name)) {
+    return "Cardholder name cannot contain consecutive spaces.";
+  }
 
   if (!/^\d{16}$/.test(card_number)) {
     return "Card number must be 16 digits.";
+  }
+  if (!/^\d+$/.test(card_number)) {
+    return "Card number must contain only numbers.";
   }
 
   if (!/^\d{3}$/.test(cvv)) {
@@ -64,7 +78,6 @@ const validateCardData = (data) => {
 
   return null;
 };
-//TODO: Add validation for cardholder_name, just letters, spaces and letters with accents.
 
 export const getCardByNumber = async (req, res) => {
   const { card_number } = req.params;
@@ -172,8 +185,7 @@ export const updateCardById = async (req, res) => {
     handleResponse(res, 500, "Error updating card", error.message);
   }
 };
-//TODO: Add validation for cardholder_name, just letters, spaces and letters with accents.
-//TODO: Add validation for card_number, just numbers and 16 digits long and not repeated.
+
 export const deleteCardById = async (req, res) => {
   const { id } = req.params;
   try {

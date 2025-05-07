@@ -1,9 +1,9 @@
 import Joi from "joi";
 
 const userSchema = Joi.object({
-  cardholder_name: Joi.string().min(3).max(30).required(),
+  cardholder_name: Joi.string().min(3).max(20).required(),
   card_number: Joi.string()
-    .length(16)
+    .max(16)
     .pattern(/^[0-9]+$/)
     .required(),
   cvv: Joi.string()
