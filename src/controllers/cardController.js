@@ -3,6 +3,7 @@ import {
   getCardsService,
   getCardByIdService,
   updateCardByIdService,
+  deleteCardByIdService,
 } from "../models/cardModel.js";
 
 const handleResponse = (res, statusCode, message, data) => {
@@ -91,5 +92,17 @@ export const updateCardById = async (req, res) => {
     handleResponse(res, 200, "Card updated successfully", updatedCard);
   } catch (error) {
     handleResponse(res, 500, "Error updating card", error.message);
+  }
+};
+export const deleteCardById = async (req, res) => {
+  const { id } = req.params;
+  try {
+    const deletedCard = await deleteCardByIdService(id);
+    if (!deletedCard) {
+      return handleResponse(res, 404, "Card not found", null);
+    }
+    handleResponse(res, 200, "Card deleted successfully", deletedCard);
+  } catch (error) {
+    handleResponse(res, 500, "Error deleting card", error.message);
   }
 };

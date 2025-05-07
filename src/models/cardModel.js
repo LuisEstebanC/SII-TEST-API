@@ -57,3 +57,7 @@ export const updateCardByIdService = async (
   );
   return result.rows[0];
 };
+export const deleteCardByIdService = async (id) => {
+  const result = await pool.query("SELECT delete_credit_card($1)", [id]);
+  return result.rows[0];
+};
