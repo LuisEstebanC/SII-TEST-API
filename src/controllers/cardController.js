@@ -2,6 +2,7 @@ import {
   createCardService,
   getCardsService,
   getCardByIdService,
+  updateCardByIdService,
 } from "../models/cardModel.js";
 
 const handleResponse = (res, statusCode, message, data) => {
@@ -58,5 +59,37 @@ export const getCardById = async (req, res) => {
     handleResponse(res, 200, "Card retrieved successfully", card);
   } catch (error) {
     handleResponse(res, 500, "Error retrieving card", error.message);
+  }
+};
+
+export const updateCardById = async (req, res) => {
+  const { id } = req.params;
+  const {
+    cardholder_name,
+    card_number,
+    cvv,
+    brand,
+    exp_month,
+    exp_year,
+    background_image_url,
+  } = req.body;
+
+  try {
+    const updatedCard = await updateCardByIdService(
+      id,
+      cardholder_name,
+      card_number,
+      cvv,
+      brand,
+      exp_month,
+      exp_year,
+      background_image_url
+    );
+    if (!updatedCard) {
+      return handleResponse(res, 404, "Card not found", null);
+    }
+    handleResponse(res, 200, "Card updated successfully", updatedCard);
+  } catch (error) {
+    handleResponse(res, 500, "Error updating card", error.message);
   }
 };
