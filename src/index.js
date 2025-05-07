@@ -3,6 +3,7 @@ import cors from "cors";
 import dotenv from "dotenv";
 import pool from "./config/db.js";
 import cardRoutes from "./routes/cardRoutes.js";
+import errorHandler from "./middlewares/errorHandler.js";
 dotenv.config();
 
 const app = express();
@@ -13,7 +14,7 @@ app.use(cors());
 app.use(express.json());
 
 // error handling middleware
-
+app.use(errorHandler);
 // routes
 app.use("/api", cardRoutes);
 
