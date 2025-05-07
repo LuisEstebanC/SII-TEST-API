@@ -1,4 +1,8 @@
-import { createCardService, getCardsService } from "../models/cardModel.js";
+import {
+  createCardService,
+  getCardsService,
+  getCardByIdService,
+} from "../models/cardModel.js";
 
 const handleResponse = (res, statusCode, message, data) => {
   res.status(statusCode).json({
@@ -41,5 +45,18 @@ export const getCards = async (req, res) => {
     handleResponse(res, 200, "Cards retrieved successfully", cards);
   } catch (error) {
     handleResponse(res, 500, "Error retrieving cards", error.message);
+  }
+};
+
+export const getCardById = async (req, res) => {
+  const { id } = req.params;
+  try {
+    const card = await getCardByIdService(id);
+    if (!card) {
+      return handleResponse(res, 404, "Card not found", null);
+    }
+    handleResponse(res, 200, "Card retrieved successfully", card);
+  } catch (error) {
+    handleResponse(res, 500, "Error retrieving card", error.message);
   }
 };

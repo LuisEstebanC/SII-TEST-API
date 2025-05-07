@@ -27,3 +27,8 @@ export const getCardsService = async () => {
   const result = await pool.query("SELECT * FROM get_all_credit_cards()");
   return result.rows;
 };
+
+export const getCardByIdService = async (id) => {
+  const result = await pool.query("SELECT * FROM get_credit_card($1)", [id]);
+  return result.rows[0];
+};
