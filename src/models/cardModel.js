@@ -61,3 +61,10 @@ export const deleteCardByIdService = async (id) => {
   const result = await pool.query("SELECT delete_credit_card($1)", [id]);
   return result.rows[0];
 };
+export const getCardByNumberService = async (card_number) => {
+  const result = await pool.query(
+    "SELECT * FROM get_credit_card_by_number($1)",
+    [card_number]
+  );
+  return result.rows[0];
+};

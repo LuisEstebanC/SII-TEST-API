@@ -4,6 +4,7 @@ import {
   getCardByIdService,
   updateCardByIdService,
   deleteCardByIdService,
+  getCardByNumberService,
 } from "../models/cardModel.js";
 
 const handleResponse = (res, statusCode, message, data) => {
@@ -12,6 +13,18 @@ const handleResponse = (res, statusCode, message, data) => {
     message,
     data,
   });
+};
+export const getCardByNumber = async (req, res) => {
+  const { card_number } = req.params;
+  try {
+    const card = await getCardByNumberService(card_number);
+    if (!card) {
+      return handleResponse(res, 404, "Card not found", null);
+    }
+    handleResponse(res, 200, "Card retrieved successfully", card);
+  } catch (error) {
+    handleResponse(res, 500, "Error retrieving card", error.message);
+  }
 };
 
 export const createCard = async (req, res, next) => {
