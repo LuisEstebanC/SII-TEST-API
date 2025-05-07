@@ -1,8 +1,8 @@
 import express from "express";
 import cors from "cors";
 import dotenv from "dotenv";
-import pool from "./config/db.js"; // Adjust the path as necessary
-
+import pool from "./config/db.js";
+import cardRoutes from "./routes/cardRoutes.js";
 dotenv.config();
 
 const app = express();
@@ -15,6 +15,7 @@ app.use(express.json());
 // error handling middleware
 
 // routes
+app.use("/api", cardRoutes);
 
 //test
 app.get("/", async (req, res) => {
