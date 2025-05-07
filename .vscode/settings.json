@@ -1,3 +1,8 @@
 {
-  "conventionalCommits.scopes": ["database"]
+  "conventionalCommits.scopes": [
+    "database",
+    "routes",
+    "middleware",
+    "Validation"
+  ]
 }
