@@ -23,3 +23,7 @@ export const createCardService = async (
   );
   return result.rows[0];
 };
+export const getCardsService = async () => {
+  const result = await pool.query("SELECT * FROM get_all_credit_cards()");
+  return result.rows;
+};

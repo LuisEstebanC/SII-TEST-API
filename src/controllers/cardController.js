@@ -1,4 +1,4 @@
-import { createCardService } from "../models/cardModel.js";
+import { createCardService, getCardsService } from "../models/cardModel.js";
 
 const handleResponse = (res, statusCode, message, data) => {
   res.status(statusCode).json({
@@ -32,5 +32,14 @@ export const createCard = async (req, res, next) => {
     handleResponse(res, 201, "Card created successfully", newCard);
   } catch (error) {
     handleResponse(res, 500, "Error creating card", error.message);
+  }
+};
+
+export const getCards = async (req, res) => {
+  try {
+    const cards = await getCardsService();
+    handleResponse(res, 200, "Cards retrieved successfully", cards);
+  } catch (error) {
+    handleResponse(res, 500, "Error retrieving cards", error.message);
   }
 };
