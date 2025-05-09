@@ -6,10 +6,12 @@ import {
   deleteCardByIdService,
   getCardByNumberService,
 } from "../models/cardModel.js";
+import generateUniqueId from "../utils/uniq_id.js";
 
 const handleResponse = (res, statusCode, message, data) => {
   res.status(statusCode).json({
-    status: statusCode === 200 ? "success" : "error",
+    status:
+      statusCode === 200 ? "success" : statusCode === 201 ? "success" : "error",
     message,
     data,
   });
@@ -101,6 +103,7 @@ export const createCard = async (req, res, next) => {
     exp_month,
     exp_year,
     background_image_url,
+    unique_id = generateUniqueId(),
   } = req.body;
 
   const validationError = validateCardData(req.body);
@@ -119,7 +122,8 @@ export const createCard = async (req, res, next) => {
       brand,
       exp_month,
       exp_year,
-      background_image_url
+      background_image_url,
+      unique_id
     );
     handleResponse(res, 201, "Card created successfully", newCard);
   } catch (error) {
