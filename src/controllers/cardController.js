@@ -73,9 +73,10 @@ const validateCardData = (data) => {
   if (exp_year < minYear || exp_year > maxYear) {
     return `Expiration year must be between ${minYear} and ${maxYear}.`;
   }
-
-  if (exp_year === currentYear && exp_month < new Date().getMonth() + 1) {
-    return "Expiration month must be greater than the current month.";
+  if (exp_year === minYear) {
+    if (exp_month <= new Date().getMonth() + 1) {
+      return "Expiration month must be greater than the current month.";
+    }
   }
 
   return null;
